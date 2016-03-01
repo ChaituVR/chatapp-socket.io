@@ -45,10 +45,7 @@ io.on('connection', function(socket){
 
  
  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
- socket.on('chat message', function(msg){
-  console.log('message: ' + msg);
- });
-
+ 
  socket.on('adduser', function(username){
 		// we store the username in the socket session for this client
 		if(username==='' || username===null){
@@ -73,8 +70,10 @@ io.on('connection', function(socket){
   if(clientIp=='127.0.0.1'){
      //userName='Admin';
     }
-    socket.emit('chat message', 'me', msg,'right');
+    if(msg.length>0){
+    socket.emit('chat message', 'Me ( '+userName+' ) ', msg,'right');
     socket.broadcast.emit('chat message', userName,msg,'left');
+   }
    });
 
  socket.on('disconnect', function(){

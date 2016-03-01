@@ -8,7 +8,7 @@
     form { background: #000; padding: 2px; position: absolute; bottom: 0; width: 100%;}
     form input { border: none; padding: 10px; width: 70%; margin-right: 1%; }
     form button { width: 29%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-    #messages,#usersList { list-style-type: none; margin: 0; padding: 0; height:470px; overflow-y:scroll; overflow-x: hidden;
+    #messages,#usersList { list-style-type: none; margin: 0; padding: 0; height:485px; overflow-y:scroll; overflow-x: hidden;
      word-wrap: break-word;}
      #messages li,#usersList li { padding: 5px 10px; }
      #messages li:nth-child(odd) ,#usersList li:nth-child(odd){ background: #eee; }
@@ -45,23 +45,27 @@
 
    socket.emit('adduser', prompt("What's your name?"));   ///asking for username
    $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
+    
+    socket.emit('chat message', String($('#m').val()));
     $('#m').val('');
     
     return false;
+  
   });
 
 
 
 
    socket.on('chat message', function(username,msg,algin){
-    
+  
     $('#messages').append($('<li>').html("<div style='text-align:"+algin+";'><b>"+username
                         +" : </b><div><div  style='text-align:"+algin+";padding-top:5px;'>" +msg+"</div>"));
     $('#messages').animate({
       scrollTop: $('#messages').get(0).scrollHeight
     }, 1);
   });
+
+
    socket.on('connected', function(msg){
 
      $('#messages').append($('<li style="color:blue;">').text(msg));
