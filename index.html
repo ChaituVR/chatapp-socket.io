@@ -42,6 +42,7 @@ $('#usersList').hide();
 
 
    var socket = io();
+   
    socket.emit('adduser', prompt("What's your name?"));   ///asking for username
   $('form').submit(function(){
     socket.emit('chat message', $('#m').val());
@@ -67,8 +68,11 @@ socket.on('connected', function(msg){
     $('#messages').append($('<li style="color:blue;">').text(msg));
     
   });
-socket.on('totalusers', function(msg){
-   
+socket.on('totalusers', function(usernames,msg){
+    $('#usersList').text('');
+    for(var x=0;x<usernames.length;x++){
+    $('#usersList').append($('<li style="color:red;">').text(usernames[x]+" - Online"));
+    } 
     $('#total').text(msg);
     
   });

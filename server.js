@@ -31,6 +31,7 @@ server.route({
         }
     });
 var connectCounter=0;
+var usernames=[];
 io.on('connection', function(socket){
   connectCounter++;
   console.log('Total '+connectCounter+' people are connected');
@@ -43,7 +44,7 @@ io.on('connection', function(socket){
 
   
  
-  io.emit('totalusers', 'Total '+connectCounter+' people are connected');
+  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
   });
@@ -55,7 +56,7 @@ io.on('connection', function(socket){
                 
                 }
                 socket.username = username;
-                
+                usernames.push(username);
 		// add the client's username to the global list
 		//usernames[username] = username;
 		// echo to client they've connected
@@ -63,7 +64,7 @@ io.on('connection', function(socket){
 		// echo globally (all clients) that a person has connected
 		socket.broadcast.emit('connected', username + ' has connected');
 		// update the list of users in chat, client-side
-		//io.sockets.emit('updateusers', usernames);
+		io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
 	});
 
 
@@ -75,9 +76,15 @@ if(clientIp=='127.0.0.1'){
     io.emit('chat message', userName,msg);
   });
 
-  socket.on('disconnect', function(socket){
+  socket.on('disconnect', function(){
   connectCounter--;
-  io.emit('totalusers', 'Total '+connectCounter+' people are connected');
+  var index= usernames.indexOf(socket.username);
+  console.log(socket.username);   
+if (index > -1) {
+    usernames.splice(index, 1);
+}
+
+  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
   io.emit('disconnected', 'One of the user disconnected');
   
   });
