@@ -57,10 +57,10 @@ io.on('connection', function(socket){
   }
   socket.username = username;
   usernames.push(username);
-		// add the client's username to the global list
-		//usernames[username] = username;
+		
+		
 		// echo to client they've connected
-		socket.emit('chat message', 'SERVER', 'You are now connected :)');
+		socket.emit('chat message', 'SERVER', 'You are now connected :)','left');
 		// echo globally (all clients) that a person has connected
 		socket.broadcast.emit('connected', username + ' has connected');
 		// update the list of users in chat, client-side
@@ -73,7 +73,8 @@ io.on('connection', function(socket){
   if(clientIp=='127.0.0.1'){
      //userName='Admin';
     }
-    io.emit('chat message', userName,msg);
+    socket.emit('chat message', 'me', msg,'right');
+    socket.broadcast.emit('chat message', userName,msg,'left');
    });
 
  socket.on('disconnect', function(){

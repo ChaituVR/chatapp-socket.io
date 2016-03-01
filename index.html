@@ -54,18 +54,17 @@
 
 
 
-   socket.on('chat message', function(username,msg){
-
-    $('#messages').append($('<li>').text(username+" : " +msg));
+   socket.on('chat message', function(username,msg,algin){
+    
+    $('#messages').append($('<li>').html("<div style='text-align:"+algin+";'><b>"+username
+                        +" : </b><div><div  style='text-align:"+algin+";padding-top:5px;'>" +msg+"</div>"));
     $('#messages').animate({
       scrollTop: $('#messages').get(0).scrollHeight
     }, 1);
   });
    socket.on('connected', function(msg){
 
-
-
-    $('#messages').append($('<li style="color:blue;">').text(msg));
+     $('#messages').append($('<li style="color:blue;">').text(msg));
     
   });
    socket.on('totalusers', function(usernames,msg){
