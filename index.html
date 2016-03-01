@@ -8,20 +8,24 @@
       form { background: #000; padding: 2px; position: absolute; bottom: 0; width: 100%;}
       form input { border: none; padding: 10px; width: 70%; margin-right: 1%; }
       form button { width: 29%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; height:510px; overflow-y:scroll; overflow-x: hidden;
+      #messages,#usersList { list-style-type: none; margin: 0; padding: 0; height:485px; overflow-y:scroll; overflow-x: hidden;
 	word-wrap: break-word;}
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      #messages li,#usersList li { padding: 5px 10px; }
+      #messages li:nth-child(odd) ,#usersList li:nth-child(odd){ background: #eee; }
  #chatBody { border-style:solid; border-radius:10px;
 position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden;}
 #notify {padding:2px; padding-left:12px; color:green;}
 #totalusers{padding:2px; padding-left:12px; color:green; text-align:center;}
+#usersButton{height:35px; margin-top:10px;}
     </style>
   </head>
   <body>
 <h3 style="text-align:center;">Welcome to my Chat App</h3>
-  <div id="chatBody">
-    <div id="totalusers">Total 0 users connected !</div>
+
+  
+<div id="chatBody">
+    <div id="totalusers"><span id="total">Total 0 users connected !</span>&nbsp &nbsp<button id="usersButton" role="button">Show People online</button> </div>
+    <ul id="usersList"><li>Chaitu - Online</ul>
     <ul id="messages"></ul>
     <div id="notify">User1 is typing.....</div>
     <form action="">
@@ -32,6 +36,10 @@ position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden;
 
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
+
+$(document).ready(function(){
+$('#usersList').hide();
+
 
    var socket = io();
    socket.emit('adduser', prompt("What's your name?"));   ///asking for username
@@ -46,7 +54,7 @@ position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden;
 
 
  socket.on('chat message', function(username,msg){
-console.log("Hey");
+
     $('#messages').append($('<li>').text(username+" : " +msg));
     $('#messages').animate({
     scrollTop: $('#messages').get(0).scrollHeight
@@ -61,7 +69,7 @@ socket.on('connected', function(msg){
   });
 socket.on('totalusers', function(msg){
    
-    $('#totalusers').text(msg);
+    $('#total').text(msg);
     
   });
 socket.on('disconnected', function(msg){
@@ -70,6 +78,23 @@ socket.on('disconnected', function(msg){
     
   });
 
+var userVisability='hidden';
+$('#usersButton').on('click',function(){
+console.log("clicked!");
+if(userVisability==='showing'){
+
+$('#usersList').hide(500);
+$('#usersButton').text("Show people Online");
+userVisability='hidden';
+}
+else if(userVisability==='hidden'){
+$('#usersList').show(500);
+$('#usersButton').text("Hide people Online");
+userVisability='showing';
+}
+});
+
+});
 </script>
   </body>
 </html>
