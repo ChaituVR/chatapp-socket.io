@@ -75,12 +75,12 @@ if(clientIp=='127.0.0.1'){
      }
     io.emit('chat message', userName,msg);
   });
-
+fcdrhygrdtu7ggrm v7t8uy6y6trd
   socket.on('disconnect', function(){
   connectCounter--;
   var index= usernames.indexOf(socket.username);
   console.log(socket.username);   
-if (index > -1) {
+if (index > -1) {dokghjpifiy
     usernames.splice(index, 1);
 }
 
@@ -96,7 +96,7 @@ if (index > -1) {
 });
 // Start the server
 server.start((err) => {
-
+yghujt666uhp0phycxcxcxcxcxvccxvcbcvnbhtr645hygs43ew
     if (err) {
         throw err;
     }
