@@ -30,6 +30,13 @@ server.route({
   reply.file('index.html');
  }
 });
+server.route({
+ method: 'GET',
+ path: '/js/{name}',
+ handler: function (request, reply) {
+  reply.file('Public/'+request.params.name);
+ }
+});
 var connectCounter=0;
 var usernames=[];
 io.on('connection', function(socket){
@@ -47,22 +54,22 @@ io.on('connection', function(socket){
  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
  
  socket.on('adduser', function(username){
-		// we store the username in the socket session for this client
-		if(username==='' || username===null){
+  // we store the username in the socket session for this client
+  if(username==='' || username===null){
    username = 'Guest'+Math.floor((Math.random() * 1000) + 1);
 
   }
   socket.username = username;
   usernames.push(username);
-		
-		
-		// echo to client they've connected
-		socket.emit('chat message', 'SERVER', 'You are now connected :)','left');
-		// echo globally (all clients) that a person has connected
-		socket.broadcast.emit('connected', username + ' has connected');
-		// update the list of users in chat, client-side
-		io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
-	});
+  
+  
+  // echo to client they've connected
+  socket.emit('chat message', 'SERVER', 'You are now connected :)','left');
+  // echo globally (all clients) that a person has connected
+  socket.broadcast.emit('connected', username + ' has connected');
+  // update the list of users in chat, client-side
+  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
+ });
 
 
  socket.on('chat message', function(msg){
