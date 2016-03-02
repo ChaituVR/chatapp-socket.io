@@ -23,22 +23,30 @@ server.register(require('inert'), (err) => {
 
 
 // Add the route
-server.route({
+server.route([{
  method: 'GET',
  path: '/',
  handler: function (request, reply) {
   reply.file('index.html');
  }
-});
-server.route({
+},{
  method: 'GET',
  path: '/js/{name}',
  handler: function (request, reply) {
   reply.file('Public/'+request.params.name);
  }
-});
+},{
+ method: 'GET',
+ path: '/private/{chatName}/{people}',
+ handler: function (request, reply) {
+  reply("This is the private chat between " +request.params.chatName+" and "+request.params.people);
+ }
+}]);
+
+
 var connectCounter=0;
 var usernames=[];
+
 io.on('connection', function(socket){
  connectCounter++;
  console.log('Total '+connectCounter+' people are connected');
@@ -62,13 +70,14 @@ io.on('connection', function(socket){
   socket.username = username;
   usernames.push(username);
   
-  
+
   // echo to client they've connected
-  socket.emit('chat message', 'SERVER', 'You are now connected :)','left');
+  socket.emit('chat message', 'SERVER', 'You are now connected :)','center');
   // echo globally (all clients) that a person has connected
   socket.broadcast.emit('connected', username + ' has connected');
   // update the list of users in chat, client-side
-  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected');
+  io.emit('totalusers',usernames, 'Total '+connectCounter+' people are connected',username);
+
  });
 
 
