@@ -72,7 +72,7 @@ io.on('connection', function(socket){
   
 
   // echo to client they've connected
-  socket.emit('chat message', 'SERVER', 'You are now connected :)','center');
+  socket.emit('chat message', 'SERVER', 'You are now connected :)',10);
   // echo globally (all clients) that a person has connected
   socket.broadcast.emit('connected', username + ' has connected');
   // update the list of users in chat, client-side
@@ -87,8 +87,8 @@ io.on('connection', function(socket){
      //userName='Admin';
     }
     if(msg.length>0){
-    socket.emit('chat message', 'Me ( '+userName+' ) ', msg,'right');
-    socket.broadcast.emit('chat message', userName,msg,'left');
+    socket.emit('chat message', 'Me ( '+userName+' ) ', msg,150);
+    socket.broadcast.emit('chat message', userName,msg,10);
    }
    });
 
