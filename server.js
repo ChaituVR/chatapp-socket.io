@@ -8,7 +8,7 @@ const server = new Hapi.Server();
 
 server.connection({ 
  host: '0.0.0.0', 
- port: 8000 
+ port:process.env.PORT || 5000 
 });
 
 const io = require('socket.io')(server.listener);

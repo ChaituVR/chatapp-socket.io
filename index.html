@@ -119,15 +119,15 @@ var socketName="";
   });
    socket.on('totalusers', function(usernames,msg,username){
     $('#usersList').text('');
-    socketName=username;
-    $("#socketName").text("Your Name - "+socketName);
+//    socketName=username;
+    //$("#socketName").text("Your Name - "+socketName);
     for(var x=0;x<usernames.length;x++){
-      if(usernames[x]===socketName){
-        $('#usersList').append($('<li style="margin-left:10px;width=100px;color:red;">').text("You - "+usernames[x]));
-      }
-      else{
+//      if(usernames[x]===socketName){
+//        $('#usersList').append($('<li style="margin-left:10px;width=100px;color:red;">').text("You - "+usernames[x]));
+//      }
+//      else{
       $('#usersList').append($('<li style="margin-left:10px;width=100px;color:blue;"><a href="/private/'+socketName+'/'+usernames[x]+'">'+usernames[x]+' - Online</a>'));
-    }
+//    }
     } 
     $('#total').text(msg);
     
