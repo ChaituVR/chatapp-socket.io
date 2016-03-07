@@ -12,14 +12,38 @@
      word-wrap: break-word;}
      #messages li,#usersList li { padding: 5px 10px; border-style:solid; border-width:2px; border-radius:10px;
       margin-top:10px;
-      width:220px;
-      position:relative;  }
+      width:205px;
+      position:relative; }
      #messages li:nth-child(odd) ,#usersList li:nth-child(odd){  }
      #chatBody { border-style:solid; border-radius:10px;
       position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden; background-color: white;}
       #notify {padding:2px; padding-left:12px; color:green;}
       #totalusers{padding:2px;padding-bottom:10px; padding-left:12px; color:green; text-align:center; background-color: lightyellow; border-bottom:2px solid black;}
       #usersButton{height:35px; width:135px; margin-top:10px;}
+
+      .arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 20px solid black;
+  border-right: 20px solid transparent;
+  position:relative;
+left:192px;
+top:-16px;
+opacity: 0.6;
+}
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 20px solid black;
+  border-left: 20px solid transparent;
+  position:relative;
+left:-32px;
+top:-16px;
+opacity: 0.6;
+}
+.msgtime{
+position:absolute;paddding-top:20px;bottom:2px;right:10px;opacity: 0.6;
+}
     </style>
 
 
@@ -47,9 +71,14 @@
 var socketName="";
       $(document).ready(function(){
         $('#usersList').hide();
+
          $('#m').focus();
           $('#m').on('focus',function(){
            $('title').text("ChatApp in Socket.io");
+          });
+
+          $('body').on('click',function(){
+           $('#m').focus();
           });
         var socket = io();
    socket.emit('adduser', prompt("What's your name?"));   ///asking for username
@@ -61,24 +90,28 @@ var socketName="";
     return false;
   
   });
-   socket.on('chat message', function(username,msg,align){
+   socket.on('chat message', function(username,msg,align,time){
+    var myDate = new Date(time);
+    
+    var localTime = myDate.toLocaleString();
+    console.log(localTime);
+    var localTimeString=  localTime.slice(10,14)+" " +localTime.slice(17,20);;
     if(align===150){
-    $('#messages').append($('<li style="background:#90DAD4;margin-left:'+align+'px;">').html("<div><b>"+username
-                        +" : </b><div><div  style='text-align:left;padding-top:5px;'>" +msg+"</div>"));
+    $('#messages').append($('<li style="background:#B3E6DA;margin-left:'+align+'px;">').html("<div><b>"+username
+                        +" : </b><div><div  style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
+                        +msg+"</div><div class='msgtime'>"+localTimeString+"</div><span class='arrow-right'></span>"));
+    $('title').text("ChatApp in Socket.io");
   }
   else{
-    $('#messages').append($('<li style="background:#B0C95E;margin-left:'+align+'px;">').html("<div><b>"+username
-                        +" : </b><div><div  style='text-align:left;padding-top:5px;'>" +msg+"</div>"));
+    $('#messages').append($('<li style="background:#BDE4AF;margin-left:'+align+'px;">').html("<div><b>"+username
+                        +" : </b><div><div  style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
+                        +msg+"</div><div class='msgtime'>"+localTimeString+"</div><span class='arrow-left'></span>"));
+    $('title').text(username+" sent a message").css('color','red');
   }
     $('#messages').animate({
       scrollTop: $('#messages').get(0).scrollHeight
     }, 1);
-    if(align==='left'){
-    $('title').text(username+" sent a message").css('color','red');
-    }
-    else{
-    $('title').text("ChatApp in Socket.io");
-    }
+    
   });
    socket.on('connected', function(msg){
      $('#messages').append($('<li style="margin-left:10px;color:blue;">').text(msg));
