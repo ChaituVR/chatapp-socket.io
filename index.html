@@ -4,14 +4,17 @@
   <title>ChatApp in Socket.io</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial; background-color:#556b2f; }
+    body { font: 13px Helvetica, Arial; background-color:#8C94A7; }
     form { background: #000; padding: 2px; position: absolute; bottom: 0; width: 100%;}
     form input { border: none; padding: 10px; width: 70%; margin-right: 1%; }
     form button { width: 29%; background: rgb(130, 224, 255); border: none; padding: 10px; }
     #messages,#usersList { list-style-type: none; margin: 0; padding: 0; height:490px; overflow-y:scroll; overflow-x: hidden;
      word-wrap: break-word;}
-     #messages li,#usersList li { padding: 5px 10px; }
-     #messages li:nth-child(odd) ,#usersList li:nth-child(odd){ background: #eee; }
+     #messages li,#usersList li { padding: 5px 10px; border-style:solid; border-width:2px; border-radius:10px;
+      margin-top:10px;
+      width:220px;
+      position:relative;  }
+     #messages li:nth-child(odd) ,#usersList li:nth-child(odd){  }
      #chatBody { border-style:solid; border-radius:10px;
       position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden; background-color: white;}
       #notify {padding:2px; padding-left:12px; color:green;}
@@ -48,9 +51,7 @@ var socketName="";
           $('#m').on('focus',function(){
            $('title').text("ChatApp in Socket.io");
           });
-
         var socket = io();
-
    socket.emit('adduser', prompt("What's your name?"));   ///asking for username
    $('form').submit(function(){
     
@@ -60,14 +61,15 @@ var socketName="";
     return false;
   
   });
-
-
-
-
    socket.on('chat message', function(username,msg,align){
-    
-    $('#messages').append($('<li>').html("<div style='text-align:"+align+";'><b>"+username
-                        +" : </b><div><div  style='text-align:"+align+";padding-top:5px;'>" +msg+"</div>"));
+    if(align===150){
+    $('#messages').append($('<li style="background:#90DAD4;margin-left:'+align+'px;">').html("<div><b>"+username
+                        +" : </b><div><div  style='text-align:left;padding-top:5px;'>" +msg+"</div>"));
+  }
+  else{
+    $('#messages').append($('<li style="background:#B0C95E;margin-left:'+align+'px;">').html("<div><b>"+username
+                        +" : </b><div><div  style='text-align:left;padding-top:5px;'>" +msg+"</div>"));
+  }
     $('#messages').animate({
       scrollTop: $('#messages').get(0).scrollHeight
     }, 1);
@@ -77,14 +79,9 @@ var socketName="";
     else{
     $('title').text("ChatApp in Socket.io");
     }
-
-
   });
-
-
    socket.on('connected', function(msg){
-
-     $('#messages').append($('<li style="color:blue;">').text(msg));
+     $('#messages').append($('<li style="margin-left:10px;color:blue;">').text(msg));
     
   });
    socket.on('totalusers', function(usernames,msg,username){
@@ -93,31 +90,23 @@ var socketName="";
     $("#socketName").text("Your Name - "+socketName);
     for(var x=0;x<usernames.length;x++){
       if(usernames[x]===socketName){
-        $('#usersList').append($('<li style="color:red;">').text("You - "+usernames[x]));
+        $('#usersList').append($('<li style="margin-left:10px;width=100px;color:red;">').text("You - "+usernames[x]));
       }
       else{
-      $('#usersList').append($('<li style="color:blue;"><a href="/private/'+socketName+'/'+usernames[x]+'">'+usernames[x]+' - Online</a>'));
+      $('#usersList').append($('<li style="margin-left:10px;width=100px;color:blue;"><a href="/private/'+socketName+'/'+usernames[x]+'">'+usernames[x]+' - Online</a>'));
     }
     } 
     $('#total').text(msg);
     
   });
    socket.on('disconnected', function(msg){
-
-    $('#messages').append($('<li style="color:blue;">').text(msg));
+    $('#messages').append($('<li style=" margin-left:10px; color:blue;">').text(msg));
     
   });
-
-
-
-
-
-
    var userVisability='hidden';
    $('#usersButton').on('click',function(){
     console.log("clicked!");
     if(userVisability==='showing'){
-
       $('#usersList').stop().hide(500);
       $('#usersButton').text("Show people Online");
       userVisability='hidden';
@@ -128,7 +117,6 @@ var socketName="";
       userVisability='showing';
     }
   });
-
  });
 </script>
 </body>
