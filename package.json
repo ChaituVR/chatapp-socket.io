@@ -1,16 +1,26 @@
 {
   "name": "chatapp",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "chatapp made with socket.io",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "ChaituVR",
   "license": "ISC",
   "dependencies": {
     "hapi": "^13.0.0",
     "inert": "^3.2.0",
     "socket.io": "^1.4.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaituVR/chatapp-socket.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChaituVR/chatapp-socket.io/issues"
+  },
+  "homepage": "https://github.com/ChaituVR/chatapp-socket.io#readme"
 }
