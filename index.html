@@ -52,17 +52,20 @@ var socketName="";
     
     var localTime = myDate.toLocaleString();
     console.log(localTime);
-    var localTimeString=  localTime.slice(10,14)+" " +localTime.slice(17,20);;
+    var localTimeString=  localTime.slice(10,15)+" " +localTime.slice(18,21);
     if(align===150){
     $('#messages').append($('<li style="background:#B3E6DA;margin-left:'+align+'px;">').html("<div><b>"+username
-                        +" : </b><div><div  style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
-                        +msg+"</div><div class='msgtime'>"+localTimeString+"</div><span class='arrow-right'></span>"));
+                        +" : </b><div><div class='msg' style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
+                        +" " +"</div><div class='msgtime'>"+localTimeString+"</div><span class='arrow-right'></span>")); 
+    
+    $('#messages > li:last').find('.msg').text(msg);
     $('title').text("ChatApp in Socket.io");
   }
   else{
     $('#messages').append($('<li style="background:#BDE4AF;margin-left:'+align+'px;">').html("<div><b>"+username
-                        +" : </b><div><div  style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
+                        +" : </b><div><div class='msg' style='text-align:left;padding-top:5px;padding-bottom:5px;'>" 
                         +msg+"</div><div class='msgtime'>"+localTimeString+"</div><span class='arrow-left'></span>"));
+    $('#messages > li:last').find('.msg').text(msg);
     $('title').text(username+" sent a message").css('color','red');
   }
     $('#messages').animate({
