@@ -37,6 +37,12 @@ server.route([{
  }
 },{
  method: 'GET',
+ path: '/css/{name}',
+ handler: function (request, reply) {
+  reply.file('Public/'+request.params.name);
+ }
+},{
+ method: 'GET',
  path: '/private/{chatName}/{people}',
  handler: function (request, reply) {
   reply("This is the private chat between " +request.params.chatName+" and "+request.params.people);

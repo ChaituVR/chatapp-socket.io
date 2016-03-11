@@ -2,50 +2,7 @@
 <html>
 <head>
   <title>ChatApp in Socket.io</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font: 13px Helvetica, Arial; background-color:#8C94A7; }
-    form { background: #000; padding: 2px; position: absolute; bottom: 0; width: 100%;}
-    form input { border: none; padding: 10px; width: 70%; margin-right: 1%; }
-    form button { width: 29%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-    #messages,#usersList { list-style-type: none; margin: 0; padding: 0; height:490px; overflow-y:scroll; overflow-x: hidden;
-     word-wrap: break-word;}
-     #messages li,#usersList li { padding: 5px 10px; border-style:solid; border-width:2px; border-radius:10px;
-      margin-top:10px;
-      width:205px;
-      position:relative; }
-     #messages li:nth-child(odd) ,#usersList li:nth-child(odd){  }
-     #chatBody { border-style:solid; border-radius:10px;
-      position:relative; width:400px; height:600px; margin:10px auto; overflow:hidden; background-color: white;}
-      #notify {padding:2px; padding-left:12px; color:green;}
-      #totalusers{padding:2px;padding-bottom:10px; padding-left:12px; color:green; text-align:center; background-color: lightyellow; border-bottom:2px solid black;}
-      #usersButton{height:35px; width:135px; margin-top:10px;}
-
-      .arrow-right {
-  width: 0;
-  height: 0;
-  border-top: 20px solid black;
-  border-right: 20px solid transparent;
-  position:relative;
-left:192px;
-top:-16px;
-opacity: 0.6;
-}
-.arrow-left {
-  width: 0;
-  height: 0;
-  border-top: 20px solid black;
-  border-left: 20px solid transparent;
-  position:relative;
-left:-32px;
-top:-16px;
-opacity: 0.6;
-}
-.msgtime{
-position:absolute;paddding-top:20px;bottom:2px;right:10px;opacity: 0.6;
-}
-    </style>
-
+ <link rel="stylesheet" type="text/css" href="css/main.css">
 
 
   </head>
