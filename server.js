@@ -54,7 +54,7 @@ server.register(require('inert'), (err) => {
  var usernames = [];
 
  io.on('connection', function(socket) {
-  connectCounter++;
+  
   console.log('Total ' + connectCounter + ' people are connected');
 
   var socketId = socket.id;
@@ -75,6 +75,7 @@ server.register(require('inert'), (err) => {
    }
    socket.username = username;
    usernames.push(username);
+   connectCounter++;
 
    var timeInString = gettimeMsg();
    // echo to client they've connected
